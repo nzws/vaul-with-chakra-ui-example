@@ -9,7 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useResizeObserver } from "@react-hookz/web";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Drawer } from "vaul";
 
 interface Props {
@@ -67,6 +67,18 @@ export default function FirstDrawer({ onOpenSecondDrawer }: Props) {
   useResizeObserver(contentRef, () => {
     handleResize();
   });
+
+  useEffect(() => {
+    const v = window.visualViewport;
+    if (!v) {
+      return;
+    }
+    v.addEventListener("resize", handleResize);
+
+    return () => {
+      v.removeEventListener("resize", handleResize);
+    };
+  }, [handleResize]);
 
   return (
     <Drawer.Root
