@@ -87,6 +87,13 @@ export default function FirstDrawer({ onOpenSecondDrawer }: Props) {
     };
   }, [handleResize]);
 
+  const [sampleSize, setSampleSize] = useState(100);
+
+  const handleSampleSizeChange = useCallback(() => {
+    const random = Math.floor(Math.random() * 200);
+    setSampleSize(random);
+  }, []);
+
   return (
     <Drawer.Root
       open={true}
@@ -109,7 +116,7 @@ export default function FirstDrawer({ onOpenSecondDrawer }: Props) {
           shadow="dark-lg"
           outline={0}
         >
-          <VStack py={4} gap={4} ref={handleMountContent}>
+          <VStack py={4} gap={4} ref={handleMountContent} pointerEvents="auto">
             <Box
               mx="auto"
               width={14}
@@ -133,17 +140,21 @@ export default function FirstDrawer({ onOpenSecondDrawer }: Props) {
                   <ListItem>2 snap points (100px & dynamic)</ListItem>
                 </UnorderedList>
 
-                <Textarea
-                  placeholder={`Sample of dynamic height content\n(Try resize ↘)`}
-                />
+                <Box w="full" height={`${sampleSize}px`} bg="gray.200"></Box>
 
-                <Button onClick={onOpenSecondDrawer} w="full">
+                <Button onClick={handleSampleSizeChange} w="full" size="sm">
+                  Resize: {sampleSize}px
+                </Button>
+
+                <Button onClick={onOpenSecondDrawer} w="full" colorScheme="blue">
                   Toggle 2nd drawer
                 </Button>
               </VStack>
             </Container>
           </VStack>
         </Box>
+
+        <Drawer.Overlay />
       </Drawer.Portal>
     </Drawer.Root>
   );

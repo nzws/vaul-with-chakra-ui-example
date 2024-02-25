@@ -139,6 +139,8 @@ export default function SecondDrawer({ isOpen, setOpen }: Props) {
             </Container>
           </VStack>
         </Box>
+
+        <Drawer.Overlay />
       </Drawer.Portal>
     </Drawer.Root>
   );
