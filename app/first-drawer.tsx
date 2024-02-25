@@ -31,6 +31,13 @@ export default function FirstDrawer({ onOpenSecondDrawer }: Props) {
   ]);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
+  const handleToggleSnapPoint = useCallback(() => {
+    setSnapPoint((prev) => {
+      const index = prev ? snapPoints.indexOf(prev) : -1;
+      return snapPoints[index + 1] || snapPoints[0];
+    });
+  }, [snapPoints]);
+
   // 一番上のスナップポイントを中身の高さに合わせるやつ
   const handleResize = useCallback(() => {
     const content = contentRef.current;
@@ -111,6 +118,7 @@ export default function FirstDrawer({ onOpenSecondDrawer }: Props) {
               rounded="full"
               bg="gray.200"
               shadow="inner"
+              onClick={handleToggleSnapPoint}
             />
 
             <Container maxW="container.xl">

@@ -31,6 +31,10 @@ export default function SecondDrawer({ isOpen, setOpen }: Props) {
   ]);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, [setOpen]);
+
   // 一番上のスナップポイントを中身の高さに合わせるやつ
   const handleResize = useCallback(() => {
     const content = contentRef.current;
@@ -83,7 +87,7 @@ export default function SecondDrawer({ isOpen, setOpen }: Props) {
   return (
     <Drawer.Root
       open={isOpen}
-      onClose={() => setOpen(false)}
+      onClose={handleClose}
       onOpenChange={setOpen}
       snapPoints={snapPoints}
       activeSnapPoint={snapPoint}
@@ -111,7 +115,9 @@ export default function SecondDrawer({ isOpen, setOpen }: Props) {
               rounded="full"
               bg="gray.200"
               shadow="inner"
+              onClick={handleClose}
             />
+
             <Container maxW="container.xl">
               <VStack gap={4} alignItems="flex-start">
                 <HStack w="full" justify="space-between">
